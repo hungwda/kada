@@ -1,0 +1,27 @@
+{
+  "name": "Kannada Kids - Learn Kannada",
+  "short_name": "Kannada Kids",
+  "description": "Fun and interactive Kannada alphabet learning app for kids",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F3E8FF",
+  "theme_color": "#4F46E5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "kids"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

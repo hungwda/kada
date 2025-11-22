@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate App Icons</title>
+    <style>
+        body {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        canvas {
+            border: 2px solid #333;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kannada Kids App Icon Generator</h1>
+    <p>Right-click on each icon and "Save image as..." to save as PNG</p>
+
+    <div>
+        <h3>192x192 Icon</h3>
+        <canvas id="icon192" width="192" height="192"></canvas>
+        <br>
+        <button onclick="downloadIcon('icon192', 'icon-192.png')">Download 192x192</button>
+    </div>
+
+    <div>
+        <h3>512x512 Icon</h3>
+        <canvas id="icon512" width="512" height="512"></canvas>
+        <br>
+        <button onclick="downloadIcon('icon512', 'icon-512.png')">Download 512x512</button>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#6366F1');
+            gradient.addColorStop(1, '#A855F7');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Add rounded corners effect
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            const radius = size * 0.1;
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+
+            // Redraw background (needed after clipping)
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Add book emoji/icon
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('📚', size / 2, size / 2);
+
+            // Add "ಕ" character
+            ctx.font = `bold ${size * 0.25}px "Noto Sans Kannada", Arial`;
+            ctx.fillStyle = 'white';
+            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+            ctx.shadowBlur = 10;
+            ctx.fillText('ಕ', size / 2 + size * 0.15, size / 2 - size * 0.15);
+            ctx.shadowBlur = 0;
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Generate icons on load
+        window.onload = () => {
+            drawIcon('icon192', 192);
+            drawIcon('icon512', 512);
+        };
+    </script>
+</body>
+</html>

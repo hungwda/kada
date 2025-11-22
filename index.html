@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Learn Kannada alphabet with fun games for kids">
+    <meta name="theme-color" content="#4F46E5">
+    <title>Kannada Kids - Learn Kannada Alphabet</title>
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Kannada Kids">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Preact -->
+    <script type="module">
+        import { h, render, Component } from 'https://esm.sh/preact@10.19.3';
+        import { useState, useEffect } from 'https://esm.sh/preact@10.19.3/hooks';
+        import htm from 'https://esm.sh/htm@3.1.1';
+
+        const html = htm.bind(h);
+        window.h = h;
+        window.html = html;
+        window.useState = useState;
+        window.useEffect = useEffect;
+        window.Component = Component;
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;700&family=Fredoka:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Fredoka', 'Noto Sans Kannada', sans-serif;
+            overscroll-behavior: none;
+            touch-action: pan-x pan-y;
+        }
+
+        .kannada-text {
+            font-family: 'Noto Sans Kannada', sans-serif;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+
+        .animate-wiggle {
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .animate-pop {
+            animation: pop 0.3s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                        0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .star {
+            filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6));
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 min-h-screen">
+    <div id="app"></div>
+
+    <!-- Lesson Data -->
+    <script src="./src/data/kannada-lessons.js"></script>
+
+    <!-- Utilities -->
+    <script src="./src/utils/storage.js"></script>
+    <script src="./src/utils/audio.js"></script>
+
+    <!-- Components -->
+    <script src="./src/components/Navigation.js"></script>
+    <script src="./src/components/Progress.js"></script>
+    <script src="./src/components/Lesson.js"></script>
+
+    <!-- Games -->
+    <script src="./src/games/MatchingGame.js"></script>
+    <script src="./src/games/TracingGame.js"></script>
+    <script src="./src/games/ListeningGame.js"></script>
+
+    <!-- Main App -->
+    <script src="./src/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
